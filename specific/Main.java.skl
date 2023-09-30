@@ -1,0 +1,15 @@
+return function (buf)
+	local name = vim.api.nvim_buf_get_name(buf)
+	local basename = vim.fs.basename(name)
+	return { class_name = basename:gsub('%.java$', ''):gsub('^%l', string.upper)
+		   , _cursor = { 5, 2 }
+		   }
+end
+---
+public class ${class_name}
+{
+	public static void main(String[] args)
+	{
+		
+	}
+}

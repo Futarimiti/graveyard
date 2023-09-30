@@ -1,0 +1,11 @@
+return function (_)
+	return { _cursor = { 4, 0 } }
+end
+---
+# pyright: strict
+
+def main():
+	
+
+if __name__ == '__main__':
+    main()

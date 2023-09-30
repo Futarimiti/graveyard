@@ -1,0 +1,10 @@
+return function (buf)
+	local name = vim.api.nvim_buf_get_name(buf)
+	local basename = vim.fs.basename(name)
+	return { module_name = basename:gsub('%.hs$', ''):gsub('^%l', string.upper)
+           , _cursor = { 2, 0 }
+		   }
+end
+---
+module ${module_name} where
+
