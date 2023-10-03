@@ -1,0 +1,35 @@
+return function (buf)
+	local name = vim.api.nvim_buf_get_name(buf)
+	local basename = vim.fs.basename(name)
+	local module_name = basename:gsub('%.hs$', ''):gsub('^%l', string.upper)
+	return { module_name = module_name
+		   , yesod_data = module_name
+		   }
+end
+---
+{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE DeriveAnyClass    #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes       #-}
+{-# LANGUAGE RecordWildCards   #-}
+{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE TypeFamilies      #-}
+
+module ${module_name} where
+
+import           Yesod
+
+mkYesod "${yesod_data}" [parseRoutes|
+  / HomeR GET
+  |]
+
+data ${yesod_data} = ${yesod_data}
+  deriving (Yesod)
+
+getHomeR :: Handler Html
+getHomeR = defaultLayout [whamlet|
+  Hello World!
+  |]
+
+run :: IO ()
+run = warp 3000 ${yesod_data}
